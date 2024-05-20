@@ -2,6 +2,8 @@
     "rust-analyzer.linkedProjects": [
         "./exercises/00_compiling/guest/Cargo.toml",
         "./exercises/00_compiling/host/Cargo.toml",
+        "./exercises/01_input/guest/Cargo.toml",
+        "./exercises/01_input/host/Cargo.toml",
         "./Cargo.toml",
     ]
 }

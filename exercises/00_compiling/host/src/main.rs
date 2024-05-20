@@ -74,7 +74,7 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-// Note: utility to retrieve the
+// Note: utility to retrieve the guest binary and image ID from ../guest
 fn guest_bin() -> (Vec<u8>, Digest) {
     let guest_elf = fs::read(
         fs::canonicalize(env!("CARGO_MANIFEST_DIR"))
