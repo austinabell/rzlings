@@ -139,6 +139,7 @@ impl Exercise {
                     "--manifest-path",
                     self.path.join("host").join("Cargo.toml").to_str().unwrap(),
                 ])
+                .env("RISC0_DEV_MODE", "true")
                 .output(),
             Mode::Test => Command::new("rustc")
                 .args(["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
@@ -226,6 +227,7 @@ path = "{}.rs""#,
                     "--manifest-path",
                     self.path.join("host").join("Cargo.toml").to_str().unwrap(),
                 ])
+                .env("RISC0_DEV_MODE", "true")
                 .output()
                 .expect("Failed to run risc0 program")
         } else {

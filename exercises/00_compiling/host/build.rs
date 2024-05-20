@@ -19,6 +19,9 @@ fn main() {
         // dir.join("test").as_os_str().to_str().unwrap(),
     ]);
 
+    // Make sure to re-run if guest changed
+    println!("cargo:rerun-if-changed={}", dir.display());
+
     // Execute the build command.
     cmd.status().unwrap();
 }
