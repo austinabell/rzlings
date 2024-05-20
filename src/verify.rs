@@ -31,6 +31,7 @@ pub fn verify<'a>(
             Mode::Test => compile_and_test(exercise, RunMode::Interactive, verbose, success_hints),
             Mode::Compile => compile_and_run_interactively(exercise, success_hints),
             Mode::Clippy => compile_only(exercise, success_hints),
+            Mode::Risc0Run => compile_and_run_interactively(exercise, success_hints),
         };
         if !compile_result.unwrap_or(false) {
             return Err(exercise);
@@ -177,6 +178,7 @@ fn prompt_for_completion(
         Mode::Compile => success!("Successfully ran {}!", exercise),
         Mode::Test => success!("Successfully tested {}!", exercise),
         Mode::Clippy => success!("Successfully compiled {}!", exercise),
+        Mode::Risc0Run => success!("Successfully ran {}!", exercise),
     }
 
     let no_emoji = env::var("NO_EMOJI").is_ok();
@@ -191,6 +193,7 @@ fn prompt_for_completion(
         Mode::Compile => "The code is compiling!",
         Mode::Test => "The code is compiling, and the tests pass!",
         Mode::Clippy => clippy_success_msg,
+        Mode::Risc0Run => "The code is running!",
     };
 
     if no_emoji {

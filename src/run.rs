@@ -14,6 +14,7 @@ pub fn run(exercise: &Exercise, verbose: bool) -> Result<(), ()> {
         Mode::Test => test(exercise, verbose)?,
         Mode::Compile => compile_and_run(exercise)?,
         Mode::Clippy => compile_and_run(exercise)?,
+        Mode::Risc0Run => compile_and_run(exercise)?,
     }
     Ok(())
 }

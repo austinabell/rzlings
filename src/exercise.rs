@@ -49,6 +49,8 @@ pub enum Mode {
     Test,
     // Indicates that the exercise should be linted with clippy
     Clippy,
+    // New variant added to allow for compiling risc0 projects.
+    Risc0Run,
 }
 
 #[derive(Deserialize)]
@@ -130,6 +132,14 @@ impl Exercise {
                 .args(RUSTC_EDITION_ARGS)
                 .args(RUSTC_NO_DEBUG_ARGS)
                 .output(),
+            Mode::Risc0Run => Command::new("cargo")
+                .args(["build"])
+                // This assumes that the runnable code is in ./host of the directory
+                .args([
+                    "--manifest-path",
+                    self.path.join("host").join("Cargo.toml").to_str().unwrap(),
+                ])
+                .output(),
             Mode::Test => Command::new("rustc")
                 .args(["--test", self.path.to_str().unwrap(), "-o", &temp_file()])
                 .args(RUSTC_COLOR_ARGS)
@@ -207,10 +217,23 @@ path = "{}.rs""#,
             Mode::Test => "--show-output",
             _ => "",
         };
-        let cmd = Command::new(temp_file())
-            .arg(arg)
-            .output()
-            .expect("Failed to run 'run' command");
+        let cmd = if matches!(self.mode, Mode::Risc0Run) {
+            // Running immediately, not referencing a temp file.
+            Command::new("cargo")
+                .args(["run"])
+                // This assumes that the runnable code is in ./host of the directory
+                .args([
+                    "--manifest-path",
+                    self.path.join("host").join("Cargo.toml").to_str().unwrap(),
+                ])
+                .output()
+                .expect("Failed to run risc0 program")
+        } else {
+            Command::new(temp_file())
+                .arg(arg)
+                .output()
+                .expect("Failed to run 'run' command")
+        };
 
         let output = ExerciseOutput {
             stdout: String::from_utf8_lossy(&cmd.stdout).to_string(),
@@ -225,13 +248,15 @@ path = "{}.rs""#,
     }
 
     pub fn state(&self) -> State {
-        let source_file = File::open(&self.path).unwrap_or_else(|e| {
-            println!(
-                "Failed to open the exercise file {}: {e}",
-                self.path.display(),
-            );
-            exit(1);
-        });
+        // Instead check the host main file for the state.
+        let source_file = File::open(&self.path.join("host").join("src").join("main.rs"))
+            .unwrap_or_else(|e| {
+                println!(
+                    "Failed to open the exercise file {}: {e}",
+                    self.path.display(),
+                );
+                exit(1);
+            });
         let mut source_reader = BufReader::new(source_file);
 
         // Read the next line into `buf` without the newline at the end.
