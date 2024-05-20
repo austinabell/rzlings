@@ -13,5 +13,7 @@ name = "01_input"
 path = "exercises/01_input"
 mode = "risc0run"
 hint = """
-Remove the `I AM NOT DONE` comment in the `exercises/intro00/intro1.rs` file
-to move on to the next exercise."""
+Input can be sent to the guest through the `.write(..)` and `.write_slice(..)` methods
+on the `ExecutorEnv` in the host.
+See https://dev.risczero.com/api/zkvm/tutorials/hello-world#step-2-host-share-private-data-as-input-with-the-guest
+for an example."""
