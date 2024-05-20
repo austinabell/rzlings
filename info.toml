@@ -9,7 +9,7 @@ Remove the `I AM NOT DONE` comment in the `exercises/intro00/intro1.rs` file
 to move on to the next exercise."""
 
 [[exercises]]
-name = "test"
+name = "01_input"
 path = "exercises/01_input"
 mode = "risc0run"
 hint = """
