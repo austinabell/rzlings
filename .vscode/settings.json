@@ -4,6 +4,8 @@
         "./exercises/00_compiling/host/Cargo.toml",
         "./exercises/01_input/guest/Cargo.toml",
         "./exercises/01_input/host/Cargo.toml",
+        "./exercises/02_output/guest/Cargo.toml",
+        "./exercises/02_output/host/Cargo.toml",
         "./Cargo.toml",
     ]
 }

@@ -5,7 +5,8 @@ use std::io::Read;
 fn main() {
     let mut buf = Vec::new();
     env::stdin().read_to_end(&mut buf).unwrap();
-    if buf.is_empty() {
-        panic!("Guest received no input. Try setting the input on `ExecutorEnv`");
-    }
+    assert!(
+        !buf.is_empty(),
+        "Guest received no input. Try setting the input on `ExecutorEnv`"
+    );
 }

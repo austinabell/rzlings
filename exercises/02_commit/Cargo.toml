@@ -1,0 +1,5 @@
+[workspace]
+resolver = "2"
+members = ["host", "guest"]
+
+# Note: if using this outside of rzlings, options should be set to optimize by default
