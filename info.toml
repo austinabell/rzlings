@@ -26,3 +26,10 @@ hint = """
 Data can be comitted to the journal from the guest. The most simple way is through `env::commit` and `env::commit_slice`.
 See https://dev.risczero.com/api/next/zkvm/tutorials/hello-world#step-3-guest-read-input-and-commit-output
 for an example."""
+
+[[exercises]]
+name = "03_static_checks"
+path = "exercises/03_static_checks"
+mode = "risc0run"
+hint = """
+Make an assertion in the guest that"""
