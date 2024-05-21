@@ -19,14 +19,14 @@ fn main() -> anyhow::Result<()> {
     let (guest_elf, guest_id) = guest_bin();
 
     // TODO update the executor env to provide some input.
-    let env = ExecutorEnv::builder().build().unwrap();
+    let env = ExecutorEnv::builder().build()?;
 
     // Obtain the default prover.
     let prover = default_prover();
 
     // Proof information by proving the specified ELF binary.
     // This struct contains the receipt along with statistics about execution of the guest
-    let prove_info = prover.prove(env, &guest_elf).unwrap();
+    let prove_info = prover.prove(env, &guest_elf)?;
 
     println!("Guest ran the program successfully!");
 
@@ -35,7 +35,7 @@ fn main() -> anyhow::Result<()> {
 
     // The receipt was verified at the end of proving, but the below code is an
     // example of how someone else could verify this receipt.
-    receipt.verify(guest_id).unwrap();
+    receipt.verify(guest_id)?;
 
     Ok(())
 }
